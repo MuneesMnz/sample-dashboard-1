@@ -10,7 +10,7 @@ import { BsChatLeft, BsFullscreenExit } from "react-icons/bs";
 
 const Navbar = () => {
   return (
-    <div className="h-[50px] border-b-[0.5px] flex items-center text-[14px] text-gray-500">
+    <div className="h-[56px] border-b-[0.5px] flex items-center text-[14px] text-gray-500">
       <div className="flex p-5 items-center justify-between w-full">
         <div className="flex items-center p-1 border rounded">
           <input

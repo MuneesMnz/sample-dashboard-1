@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Widget from "../../components/Widget/Widget";
 import Featured from "../../components/featured/Featured";
 import Chart from "../../components/chart/Chart";
+import ListTable from "../../components/Table/Table";
 
 const Home = () => {
   return (
@@ -19,6 +20,12 @@ const Home = () => {
         <div className="flex py-1 px-5 gap-5">
           <Featured />
           <Chart />
+        </div>
+        <div className="p-5 m-5 shadow-md">
+          <div className="font-semibold mb-4 text-gray-700"> 
+              Heading
+          </div>
+          <ListTable />
         </div>
       </div>
 
