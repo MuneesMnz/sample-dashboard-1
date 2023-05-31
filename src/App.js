@@ -6,10 +6,13 @@ import ListData from "./Pages/List/ListData";
 import Single from "./Pages/Single/Single";
 import New from "./Pages/New/New";
 import { productInput, userInput } from "./FileSource";
+import { useContext, useState } from "react";
+import { DarkModeContext } from "./Context/darkModeContext";
 
 function App() {
+  const {darkMode} =useContext(DarkModeContext)
   return (
-    <div>
+    <div className={`${darkMode ? "bg-[#222] text-gray-300" : ""} `}>
       <BrowserRouter>
         <Routes>
           <Route path="/">

@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { BsThreeDotsVertical, BsChevronDown } from "react-icons/bs";
 import "react-circular-progressbar/dist/styles.css";
+import { DarkModeContext } from "../../Context/darkModeContext";
 
 const Featured = () => {
+  const {darkMode}=useContext(DarkModeContext)
   const color = true;
   return (
-    <div className="flex-[2] shadow p-2.5 ">
+    <div className={`flex-[2] ${darkMode ? "shadow shadow-white" :"shadow-md" } p-2.5 `}>
       <div className="flex items-center justify-between text-gray-500">
         <div className="text-lg">Total Revenue</div>
         <BsThreeDotsVertical size={14} />

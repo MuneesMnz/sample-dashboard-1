@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   AreaChart,
   Area,
@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { DarkModeContext } from "../../Context/darkModeContext";
 
 const Chart = ({aspect,title}) => {
   const data = [
@@ -18,10 +19,11 @@ const Chart = ({aspect,title}) => {
    {name:"May",Total:900},
    {name:"June",Total:1900}
   ];
+  const {darkMode}=useContext(DarkModeContext)
 
   return (
-    <div className="flex-[4] shadow-md p-2.5 text-gray-700 ">
-        <div className="mb-5 font-semibold text-gray-500 text-xl">{title}</div>
+    <div className={`flex-[4] ${darkMode ? "shadow shadow-white" :"shadow-md"} p-2.5 text-gray-700 `}>
+      <div className={`mb-5 font-semibold ${darkMode ? "text-gray-200" :"text-gray-500"} text-xl`}>{title}</div>
       <ResponsiveContainer width="100%" aspect={aspect} >
         <AreaChart
           width={730}

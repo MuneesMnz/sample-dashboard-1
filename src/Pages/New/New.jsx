@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import { FaUpload } from "react-icons/fa";
+import { DarkModeContext } from "../../Context/darkModeContext";
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
-  console.log(file);
+  const {darkMode}=useContext(DarkModeContext)
   return (
     <div className="w-full flex">
       <Sidebar />
@@ -50,7 +51,7 @@ const New = ({ inputs, title }) => {
                       </label>
                       <input
                         type={inp.type}
-                        className="w-full p-1 border-b outline-none  border-b-gray-500 "
+                        className={`w-full p-1 border-b outline-none bg-transparent  ${darkMode ? "border-b-gray-200 ":"border-b-gray-600 "}`}
                         placeholder={inp.placeholder}
                       />
                     </div>

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import Chart from "../../components/chart/Chart";
 import ListTable from "../../components/Table/Table";
+import { DarkModeContext } from "../../Context/darkModeContext";
 
 const Single = () => {
+  const {darkMode}=useContext(DarkModeContext)
   return (
     <div className="flex w-full">
       <Sidebar />
@@ -12,7 +14,7 @@ const Single = () => {
         <Navbar />
         <div className="p-5 flex gap-5">
           <div className="flex-1 shadow-md p-5 relative">
-            <div className="text-xl font font-semibold mb-3 text-gray-500">
+            <div className={`text-xl font font-semibold mb-3 ${darkMode ? "text-gray-200" :"text-gray-500"} `}>
               Information
             </div>
             <div className="flex items-center gap-5 ">

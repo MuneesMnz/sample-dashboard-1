@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,8 +6,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { DarkModeContext } from "../../Context/darkModeContext";
 
 const ListTable = () => {
+  const { darkmode } = useContext(DarkModeContext);
   const data = [
     {
       id: 254136,
@@ -46,18 +48,20 @@ const ListTable = () => {
       status: "Approved",
     },
   ];
+  useEffect(()=>{
 
+  },[darkmode])
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} >
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className="">ID</TableCell>
-            <TableCell className="">Product</TableCell>
-            <TableCell className="">Date</TableCell>
-            <TableCell className="">amount</TableCell>
-            <TableCell className="">Payment Method</TableCell>
-            <TableCell className="">Status</TableCell>
+            <TableCell   className={`${darkmode ? "text-gray-200":"text-gray-500"}`}>ID</TableCell>
+            <TableCell  className={`${darkmode ? "text-gray-200":"text-gray-500"}`}>Product</TableCell>
+            <TableCell  className={`${darkmode ? "text-gray-200":"text-gray-500"}`}>Date</TableCell>
+            <TableCell  className={`${darkmode ? "text-gray-200":"text-gray-500"}`}>amount</TableCell>
+            <TableCell  className={`${darkmode ? "text-gray-200":"text-gray-500"}`}>Payment Method</TableCell>
+            <TableCell  className={`${darkmode ? "text-gray-200":"text-gray-500"}`}>Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -77,13 +81,21 @@ const ListTable = () => {
               <TableCell>{value.date}</TableCell>
               <TableCell>{value.amount}</TableCell>
               <TableCell>{value.method}</TableCell>
-              <TableCell><div className={` p-1 rounded w-[max-content] ${value.status==="Approved" ? "text-green-800 bg-green-200" : "text-yellow-800 bg-yellow-200" }`}>
-              {value.status }
-                </div></TableCell>
+              <TableCell>
+                <div
+                  className={` p-1 rounded w-[max-content] ${
+                    value.status === "Approved"
+                      ? "text-green-800 bg-green-200"
+                      : "text-yellow-800 bg-yellow-200"
+                  }`}
+                >
+                  {value.status}
+                </div>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
-      </Table> 
+      </Table>
     </TableContainer>
   );
 };

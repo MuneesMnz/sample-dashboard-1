@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BsChevronUp, BsPerson, BsListCheck, BsCashCoin } from "react-icons/bs";
+import { DarkModeContext } from "../../Context/darkModeContext";
 const Widget = ({ type }) => {
   const [persentage, setPersentage] = useState(true);
+  const {darkMode}=useContext(DarkModeContext)
   let data;
   const amount = 100;
   switch (type) {
@@ -49,7 +51,7 @@ const Widget = ({ type }) => {
       break;
   }
   return (
-    <div className="flex flex-1 p-2 justify-between shadow-md rounded h-[150px]">
+    <div className={`flex flex-1 p-2 justify-between ${darkMode ? " shadow shadow-white":"shadow-md "} rounded h-[150px]`}>
       <div className="flex flex-col justify-between">
         <span className="font-semibold text-gray-500 text-lg">
           {data.title}
