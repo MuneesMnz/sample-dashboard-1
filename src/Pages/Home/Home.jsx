@@ -19,7 +19,7 @@ const Home = () => {
         </div>
         <div className="flex py-1 px-5 gap-5">
           <Featured />
-          <Chart />
+          <Chart aspect={2/1} title="Last 6 Month (Revenue)" />
         </div>
         <div className="p-5 m-5 shadow-md">
           <div className="font-semibold mb-4 text-gray-700"> 

@@ -1,6 +1,8 @@
 import React from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
+import Chart from "../../components/chart/Chart";
+import ListTable from "../../components/Table/Table";
 
 const Single = () => {
   return (
@@ -8,9 +10,11 @@ const Single = () => {
       <Sidebar />
       <div className="flex-[6]">
         <Navbar />
-        <div className="p-5 flex g-5">
+        <div className="p-5 flex gap-5">
           <div className="flex-1 shadow-md p-5 relative">
-            <div className="text-xl font font-semibold mb-3 text-gray-500">Information</div>
+            <div className="text-xl font font-semibold mb-3 text-gray-500">
+              Information
+            </div>
             <div className="flex items-center gap-5 ">
               <img
                 src="https://m.media-amazon.com/images/I/7196oQDyF6L.jpg"
@@ -47,9 +51,14 @@ const Single = () => {
               </div>
             </div>
           </div>
-          <div className="flex-[2]"></div>
+          <div className="flex-[2]">
+            <Chart aspect={3 / 1} title={"Item Stock Details  (Last 6 Month)"} />
+          </div>
         </div>
-        <div></div>
+        <div className="p-5 shadow-md mx-5 my-2.5">
+          <h1 className="text-xl font font-semibold mb-3 text-gray-500">Last Updations </h1>
+          <ListTable />
+        </div>
       </div>
     </div>
   );
