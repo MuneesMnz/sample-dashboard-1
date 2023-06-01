@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 
@@ -8,26 +8,83 @@ import New from "./Pages/New/New";
 import { productInput, userInput } from "./FileSource";
 import { useContext, useState } from "react";
 import { DarkModeContext } from "./Context/darkModeContext";
+import { AuthContext } from "./Context/AuthContext";
 
 function App() {
-  const {darkMode} =useContext(DarkModeContext)
+  const { darkMode } = useContext(DarkModeContext);
+
+  const {currentUser}=useContext(AuthContext)
+
+  const RequireAuth = ({ children }) => {
+    return currentUser ? children : <Navigate to="/login" />;
+  };
+  console.log(currentUser);
   return (
     <div className={`${darkMode ? "bg-[#222] text-gray-300" : ""} `}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
+            <Route
+              index
+              element={
+                <RequireAuth>
+                  <Home />
+                </RequireAuth>
+              }
+            />
           </Route>
           <Route path="users">
-            <Route index element={<ListData />} />
-            <Route path=":userId" element={<Single />} />
-            <Route path="new" element={<New inputs={userInput} title="Add New User" />} />
+            <Route
+              index
+              element={
+                <RequireAuth>
+                  <ListData />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path=":userId"
+              element={
+                <RequireAuth>
+                  <Single />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="new"
+              element={
+                <RequireAuth>
+                  <New inputs={userInput} title="Add New User" />
+                </RequireAuth>
+              }
+            />
           </Route>
           <Route path="product">
-            <Route index element={<ListData />} />
-            <Route path=":productId" element={<Single />} />
-            <Route path="new" element={<New inputs={productInput} title="Add New Product" />} />
+            <Route
+              index
+              element={
+                <RequireAuth>
+                  <ListData />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path=":productId"
+              element={
+                <RequireAuth>
+                  <Single />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="new"
+              element={
+                <RequireAuth>
+                  <New inputs={productInput} title="Add New Product" />
+                </RequireAuth>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>
