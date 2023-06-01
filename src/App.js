@@ -18,7 +18,7 @@ function App() {
   const RequireAuth = ({ children }) => {
     return currentUser ? children : <Navigate to="/login" />;
   };
-  console.log(currentUser);
+  // console.log(currentUser);
   return (
     <div className={`${darkMode ? "bg-[#222] text-gray-300" : ""} `}>
       <BrowserRouter>

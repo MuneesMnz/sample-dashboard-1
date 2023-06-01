@@ -1,11 +1,78 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import { FaUpload } from "react-icons/fa";
 import { DarkModeContext } from "../../Context/darkModeContext";
+import {
+  addDoc,
+  doc,
+  setDoc,
+  collection,
+  serverTimestamp,
+} from "firebase/firestore";
+import { auth, storage, db } from "../../Firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
-  const {darkMode}=useContext(DarkModeContext)
+  const [data, setData] = useState({});
+  const [Percentage, setpercentage] = useState(null);
+  const { darkMode } = useContext(DarkModeContext);
+
+  useEffect(() => {
+    const uploadFile = () => {
+      const storageRef = ref(storage, file.name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          setpercentage(progress);
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+            default:
+              break;
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setData((prev) => ({ ...prev, img: downloadURL }));
+          });
+        }
+      );
+    };
+    file && uploadFile();
+  }, [file]);
+
+  const handleInput = (e) => {
+    const id = e.target.id;
+    const value = e.target.value;
+    setData({ ...data, [id]: value });
+  };
+  // console.log(data);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await setDoc(doc(db, "product", data.p_name), {
+        ...data,
+        timeStamp: serverTimestamp(),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="w-full flex">
       <Sidebar />
@@ -27,7 +94,7 @@ const New = ({ inputs, title }) => {
             />
           </div>
           <div className="flex-[2]">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="flex  flex-wrap gap-5 justify-between">
                 <div className="w-[40%] mb-2">
                   <label
@@ -50,17 +117,22 @@ const New = ({ inputs, title }) => {
                         {inp.label}
                       </label>
                       <input
+                        id={inp.id}
                         type={inp.type}
-                        className={`w-full p-1 border-b outline-none bg-transparent  ${darkMode ? "border-b-gray-200 ":"border-b-gray-600 "}`}
+                        className={`w-full p-1 border-b outline-none bg-transparent  ${
+                          darkMode ? "border-b-gray-200 " : "border-b-gray-600 "
+                        }`}
                         placeholder={inp.placeholder}
+                        onChange={handleInput}
                       />
                     </div>
                   );
                 })}
               </div>
               <button
-                className="w-[150px] p-2.5 bg-teal-800 text-white font-semibold mt-5 rounded "
+                className="w-[150px] p-2.5 bg-teal-800 text-white font-semibold mt-5 rounded disabled:bg-teal-500 disabled:cursor-not-allowed "
                 type="submit"
+                disabled={Percentage !== null && Percentage < 100}
               >
                 Send
               </button>
